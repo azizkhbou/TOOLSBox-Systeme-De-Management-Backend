@@ -15,9 +15,7 @@ import com.altran.TOOLSBox_Systeme_De_Management.repository.UserRepository;
 import com.altran.TOOLSBox_Systeme_De_Management.security.JwtTokenProvider;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;

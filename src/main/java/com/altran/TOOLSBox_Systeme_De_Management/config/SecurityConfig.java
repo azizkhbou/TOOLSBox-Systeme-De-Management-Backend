@@ -47,7 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 		// @formatter:off
 		http.cors().and().httpBasic().disable().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/auth/signin").permitAll().antMatchers("/user/username/{username}").permitAll()
+				.antMatchers("/participant/**").permitAll()
+				.antMatchers("/training/**").permitAll()
+				.antMatchers("/user/create").permitAll()
+                .antMatchers("/auth/signin").permitAll().antMatchers("/user/username/{username}").permitAll()
 				.antMatchers("/user/id/{idUser}").permitAll().anyRequest().authenticated().and()
 				.apply(new JwtConfigurer(jwtTokenProvider));
 		// @formatter:on

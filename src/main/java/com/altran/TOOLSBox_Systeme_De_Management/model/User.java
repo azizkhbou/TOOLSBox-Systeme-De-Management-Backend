@@ -1,7 +1,6 @@
 package com.altran.TOOLSBox_Systeme_De_Management.model;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
