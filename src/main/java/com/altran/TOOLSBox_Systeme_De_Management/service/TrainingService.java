@@ -15,7 +15,7 @@ public interface TrainingService {
 
 	boolean deleteTraining(int idTraining);
 
-	boolean validateTraining(String validation, String validator, int id);
+	boolean validateTraining(String validation, int id);
 	
 	Training getTrainingById(int idTraining);
 

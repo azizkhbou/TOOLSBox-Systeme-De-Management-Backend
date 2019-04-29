@@ -39,16 +39,12 @@ public class Training implements Serializable {
 
 	private int nbrOfParticipants;
 
-	private String status;
-
 	private String category;
 
-	@OneToMany(mappedBy = "training",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
 	Set<Participant> participants;
 
 	private String validationActivityManager;
-
-	private String validationCEO;
 
 	public Set<Participant> getParticipants() {
 		return participants;
@@ -114,14 +110,6 @@ public class Training implements Serializable {
 		this.nbrOfParticipants = nbrOfParticipants;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public String getValidationActivityManager() {
 		return validationActivityManager;
 	}
@@ -130,27 +118,17 @@ public class Training implements Serializable {
 		this.validationActivityManager = validationActivityManager;
 	}
 
-	public String getValidationCEO() {
-		return validationCEO;
-	}
-
-	public void setValidationCEO(String validationCEO) {
-		this.validationCEO = validationCEO;
-	}
-
-	public Training(String object, String type, String required, String objectif, int nbrOfParticipants, String status,
-			String category, Set<Participant> participants, String validationActivityManager, String validationCEO) {
+	public Training(String object, String type, String required, String objectif, int nbrOfParticipants,
+			String category, Set<Participant> participants, String validationActivityManager) {
 		super();
 		this.object = object;
 		this.type = type;
 		this.required = required;
 		this.objectif = objectif;
 		this.nbrOfParticipants = nbrOfParticipants;
-		this.status = status;
 		this.category = category;
 		this.participants = participants;
 		this.validationActivityManager = validationActivityManager;
-		this.validationCEO = validationCEO;
 	}
 
 	public Training() {

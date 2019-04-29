@@ -19,7 +19,6 @@ public final class Constants {
 	public static final String REQUIRED = "required";
 	public static final String OBJECTIF = "objectif";
 	public static final String NBROFPARTICIPANTS = "nbrOfParticipants";
-	public static final String STATUS = "status";
 	public static final String CATEGORY = "category";
 	public static final String PARTICIPANTS = "participants";
 	public static final String IDPARTICIPANT = "idParticipant";

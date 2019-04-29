@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +32,8 @@ public class TrainingController {
 	public void setTrainingServiceImp(TrainingServiceImp trainingServiceImp) {
 		this.trainingService = trainingServiceImp;
 	}
-
-	@PostMapping(value = "/create")
+	
+    @PostMapping(value = "/create")
 	public boolean addTraining(@RequestBody Training training) {
 
 		return trainingService.addTraining(training);
@@ -52,8 +53,8 @@ public class TrainingController {
 		return trainingService.deleteTraining(id);
 
 	}
-
-	@GetMapping(value = "/all")
+	
+    @GetMapping(value = "/all")
 	public MappingJacksonValue getAllTrainings() {
 
 		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
@@ -72,7 +73,7 @@ public class TrainingController {
 
 		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
 		filterProvider.addFilter(Constants.TRAINING_FILTER, SimpleBeanPropertyFilter
-				.serializeAllExcept(Constants.STATUS, Constants.CATEGORY, Constants.PARTICIPANTS, Constants.OBJECTIF));
+				.serializeAllExcept(Constants.CATEGORY, Constants.PARTICIPANTS, Constants.OBJECTIF));
 
 		Pageable p = PageRequest.of(page, 6, Sort.by("idTraining").ascending().and(Sort.by("object")));
 		MappingJacksonValue trainingsMapping = new MappingJacksonValue(trainingService.getTrainingsByPage(p));
@@ -90,6 +91,12 @@ public class TrainingController {
 		MappingJacksonValue trainingMapping = new MappingJacksonValue(trainingService.getTrainingById(id));
 		trainingMapping.setFilters(filterProvider);
 		return trainingMapping;
+	}
+
+	@GetMapping(value = "/validate/{id}/{validation}")
+	public boolean validateTraining(@PathVariable int id,
+			@PathVariable String validation) {
+		return trainingService.validateTraining(validation, id);
 	}
 
 }
