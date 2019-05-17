@@ -1,21 +1,21 @@
 package com.altran.TOOLSBox_Systeme_De_Management.service;
 
-
 import org.springframework.data.domain.Page;
 
 import com.altran.TOOLSBox_Systeme_De_Management.model.User;
 
 public interface UserService {
 
-	boolean addUser(User user);
-
-	boolean updateUser(User user);
-
-	boolean deleteUser(int idUser);
+	Page<User> getAllUsers(int page);
 
 	User getUserById(int idUser);
 
-	Page<User> getAllUsers(int page);
-
 	User getUserByUsername(String username);
+
+	boolean addUser(User user);
+
+	boolean updateUser(int id, User user);
+
+	boolean deleteUser(int idUser);
+
 }

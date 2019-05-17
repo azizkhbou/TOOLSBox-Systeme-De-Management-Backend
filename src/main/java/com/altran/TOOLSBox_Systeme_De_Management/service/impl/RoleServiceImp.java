@@ -20,6 +20,16 @@ public class RoleServiceImp implements RoleService {
 	}
 
 	@Override
+	public List<Role> getAllRoles() {
+		return roleRepository.findAll();
+	}
+
+	@Override
+	public Role getRoleById(int idRole) {
+		return roleRepository.findById(idRole).orElse(null);
+	}
+
+	@Override
 	public boolean addRole(Role role) {
 		try {
 			roleRepository.save(role);
@@ -30,8 +40,9 @@ public class RoleServiceImp implements RoleService {
 	}
 
 	@Override
-	public boolean updateRole(Role role) {
+	public boolean updateRole(int id,  Role role) {
 		try {
+			role.setId(id);
 			roleRepository.save(role);
 
 		} catch (Exception e) {
@@ -48,16 +59,6 @@ public class RoleServiceImp implements RoleService {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public Role getRoleById(int idRole) {
-		return roleRepository.findById(idRole).orElse(null);
-	}
-
-	@Override
-	public List<Role> getAllRoles() {
-		return roleRepository.findAll();
 	}
 
 }

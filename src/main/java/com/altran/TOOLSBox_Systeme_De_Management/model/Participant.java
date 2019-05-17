@@ -1,68 +1,72 @@
 package com.altran.TOOLSBox_Systeme_De_Management.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.altran.TOOLSBox_Systeme_De_Management.util.Constants;
 import com.fasterxml.jackson.annotation.JsonFilter;
 
-
 @Entity
 @Table(name = "PARTICIPANTS")
 @JsonFilter(Constants.PARTICIPANT_FILTER)
-
 public class Participant implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idParticipant;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-	private String participantName;
+	@Column
+	private String firstName;
 
-	@ManyToOne
-	@JoinColumn(name = "idTraining")
-	private Training training;
+	@Column
+	private String lastName;
 
-	public Training getTraining() {
-		return training;
-	}
-
-	public void setTraining(Training training) {
-		this.training = training;
-	}
-
-	public String getParticipantName() {
-		return participantName;
-	}
-
-	public void setParticipantName(String participantName) {
-		this.participantName = participantName;
-	}
-
-	public int getIdParticipant() {
-		return idParticipant;
-	}
-
-	public void setIdParticipant(int idParticipant) {
-		this.idParticipant = idParticipant;
-	}
-
-	public Participant(Training training, String participantName) {
-		super();
-		this.training = training;
-		this.participantName = participantName;
-	}
+	@ManyToMany(mappedBy = "participants")
+	private Set<Need> needs;
 
 	public Participant() {
 		super();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Set<Need> getNeeds() {
+		return needs;
+	}
+
+	public void setNeeds(Set<Need> needs) {
+		this.needs = needs;
 	}
 
 }

@@ -5,13 +5,15 @@ import java.util.List;
 import com.altran.TOOLSBox_Systeme_De_Management.model.Activity;
 
 public interface ActivityService {
-	boolean addActivity(Activity activity);
 
-	boolean updateActivity(Activity activity);
-
-	boolean deleteActivity(int idActivity);
+	List<Activity> getAllActivities();
 
 	Activity getActivityById(int idActivity);
 
-	List<Activity> getAllActivities();
+	boolean addActivity(Activity activity);
+
+	boolean updateActivity(int id, Activity activity);
+
+	boolean deleteActivity(int idActivity);
+
 }

@@ -37,9 +37,9 @@ public class PrivilegeController {
 
 	@PreAuthorize("hasAuthority('Gestion des utilisateurs')")
 	@PutMapping(value = "/update")
-	public boolean updatePrivilege(@RequestBody Privilege privilege) {
+	public boolean updatePrivilege(@RequestBody int id,Privilege privilege) {
 
-		return privilegeServiceImp.updatePrivilege(privilege);
+		return privilegeServiceImp.updatePrivilege(id,privilege);
 
 	}
 

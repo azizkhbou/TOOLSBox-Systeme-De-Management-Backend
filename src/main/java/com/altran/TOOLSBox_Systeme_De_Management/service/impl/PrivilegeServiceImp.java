@@ -20,6 +20,16 @@ public class PrivilegeServiceImp implements PrivilegeService {
 	}
 
 	@Override
+	public List<Privilege> getAllPrivileges() {
+		return privilegeRepository.findAll();
+	}
+
+	@Override
+	public Privilege getPrivilegeById(int idPrivilege) {
+		return privilegeRepository.findById(idPrivilege).orElse(null);
+	}
+
+	@Override
 	public boolean addPrivilege(Privilege privilege) {
 		try {
 			privilegeRepository.save(privilege);
@@ -30,8 +40,9 @@ public class PrivilegeServiceImp implements PrivilegeService {
 	}
 
 	@Override
-	public boolean updatePrivilege(Privilege privilege) {
+	public boolean updatePrivilege(int id, Privilege privilege) {
 		try {
+			privilege.setId(id);
 			privilegeRepository.save(privilege);
 
 		} catch (Exception e) {
@@ -48,16 +59,6 @@ public class PrivilegeServiceImp implements PrivilegeService {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public Privilege getPrivilegeById(int idPrivilege) {
-		return privilegeRepository.findById(idPrivilege).orElse(null);
-	}
-
-	@Override
-	public List<Privilege> getAllPrivileges() {
-		return privilegeRepository.findAll();
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.altran.TOOLSBox_Systeme_De_Management.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,28 +9,30 @@ import org.springframework.stereotype.Service;
 import com.altran.TOOLSBox_Systeme_De_Management.model.Participant;
 import com.altran.TOOLSBox_Systeme_De_Management.repository.ParticipantRepository;
 import com.altran.TOOLSBox_Systeme_De_Management.service.ParticipantService;
+
 @Service
 public class ParticipantServiceImp implements ParticipantService {
-	
+
 	private ParticipantRepository participantRepository;
-    
+
 	@Autowired
-    public void setParticipantRepository(ParticipantRepository participantRepository) {
+	public void setParticipantRepository(ParticipantRepository participantRepository) {
 		this.participantRepository = participantRepository;
 	}
-	
-	
+
 	@Override
-	public boolean addParticipant(Participant participant) {
+	public List<Participant> getAllParticipants() {
+		return participantRepository.findAll();
+	}
 
-		try {
+	@Override
+	public Participant getParticipantById(int id) {
+		return participantRepository.findById(id).orElse(null);
+	}
 
-			participantRepository.save(participant);
-
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
+	@Override
+	public Participant addParticipant(Participant participant) {
+		return participantRepository.save(participant);
 	}
 
 	@Override
@@ -43,13 +46,10 @@ public class ParticipantServiceImp implements ParticipantService {
 	}
 
 	@Override
-	public Participant getParticipantById(int id) {
-		return participantRepository.findById(id).orElse(null);
-	}
+	public Set<Participant> create(Participant p) {
 
-	@Override
-	public List<Participant> getAllParticipants() {
-		return  participantRepository.findAll();
+		participantRepository.save(p);
+		return null;
 	}
 
 }

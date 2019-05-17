@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import com.altran.TOOLSBox_Systeme_De_Management.model.Participant;
+import com.altran.TOOLSBox_Systeme_De_Management.model.Organism;
 import com.altran.TOOLSBox_Systeme_De_Management.model.Training;
 import com.altran.TOOLSBox_Systeme_De_Management.repository.TrainingRepository;
 import com.altran.TOOLSBox_Systeme_De_Management.service.TrainingService;
@@ -20,11 +18,11 @@ public class TrainingServiceImp implements TrainingService {
 
 	private TrainingRepository trainingRepository;
 
-	private ParticipantServiceImp participantServiceImp;
+	private OrganismServiceImp organismServiceImp;
 
 	@Autowired
-	public void setParticipantServiceImp(ParticipantServiceImp participantServiceImp) {
-		this.participantServiceImp = participantServiceImp;
+	public void setOrganismServiceImp(OrganismServiceImp organismServiceImp) {
+		this.organismServiceImp = organismServiceImp;
 	}
 
 	@Autowired
@@ -33,45 +31,14 @@ public class TrainingServiceImp implements TrainingService {
 	}
 
 	@Override
-	public boolean addTraining(Training training) {
-
-		try {
-
-			Set<Participant> participants = training.getParticipants();
-			training.setParticipants(null);
-			Training training1 = trainingRepository.save(training);
-			participants.forEach((participant) -> {
-				participant.setTraining(training1);
-				participantServiceImp.addParticipant(participant);
-			});
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public boolean updateTraining(Training training) {
-		try {
-
-			trainingRepository.save(training);
-
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
+	public List<Training> getAllTrainings() {
+		return trainingRepository.findAll();
 
 	}
 
 	@Override
-	public boolean deleteTraining(int idTraining) {
-		try {
-			trainingRepository.deleteById(idTraining);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-
+	public Page<Training> getTrainingsByPage(Pageable pageable) {
+		return trainingRepository.findAll(pageable);
 	}
 
 	@Override
@@ -81,22 +48,29 @@ public class TrainingServiceImp implements TrainingService {
 	}
 
 	@Override
-	public List<Training> getAllTrainings() {
-		return trainingRepository.findAll();
-	}
+	public boolean addTraining(Training training) {
 
-	@Override
-	public Page<Training> getTrainingsByPage(Pageable pageable) {
-		return trainingRepository.findAll(pageable);
-	}
-
-	@Override
-	public boolean validateTraining(String validation, int id) {
 		try {
-			Training training = getTrainingById(id);
 
-			training.setValidationActivityManager(validation);
+			/*Set<Organism> organisms = training.getOrganisms();
+			training.setOrganisms(null);
+			Training training1 = trainingRepository.save(training);
+			organisms.forEach((organism) -> {
+				organism.setTraining(training1);
+				organismServiceImp.addOrganism(organism);
+			});*/
+			trainingRepository.save(training);
 
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean updateTraining(int id,  Training training) {
+		try {
+			training.setId(id);
 			trainingRepository.save(training);
 		} catch (Exception e) {
 			return false;

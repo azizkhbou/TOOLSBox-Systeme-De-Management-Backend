@@ -12,13 +12,10 @@ import javax.persistence.Table;
 @Table(name = "ACTIVITY")
 public class Activity implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idActivity;
+	private int id;
 
 	private String title;
 
@@ -31,12 +28,12 @@ public class Activity implements Serializable {
 		super();
 	}
 
-	public int getIdActivity() {
-		return idActivity;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdActivity(int idActivity) {
-		this.idActivity = idActivity;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {

@@ -1,8 +1,7 @@
 package com.altran.TOOLSBox_Systeme_De_Management.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.altran.TOOLSBox_Systeme_De_Management.model.Role;
 import com.altran.TOOLSBox_Systeme_De_Management.service.impl.RoleServiceImp;
+import com.altran.TOOLSBox_Systeme_De_Management.util.Constants;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 @RestController
 @RequestMapping(value = "/role")
@@ -28,6 +30,28 @@ public class RoleController {
 	}
 
 	@PreAuthorize("hasAuthority('Gestion des utilisateurs')")
+	@GetMapping(value = "/all")
+	public MappingJacksonValue getAllRoles() {
+
+		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+		filterProvider.addFilter(Constants.ROLE_FILTER,
+				SimpleBeanPropertyFilter.serializeAllExcept(Constants.PRIVILEGES));
+		MappingJacksonValue rolesMapping = new MappingJacksonValue(roleServiceImp.getAllRoles());
+		rolesMapping.setFilters(filterProvider);
+		return rolesMapping;
+	}
+
+	@GetMapping(value = "/id/{id}")
+	public MappingJacksonValue getRoleById(@PathVariable int id) {
+
+		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+		filterProvider.addFilter(Constants.ROLE_FILTER, SimpleBeanPropertyFilter.serializeAllExcept());
+		MappingJacksonValue rolesMapping = new MappingJacksonValue(roleServiceImp.getAllRoles());
+		rolesMapping.setFilters(filterProvider);
+		return rolesMapping;
+	}
+
+	@PreAuthorize("hasAuthority('Gestion des utilisateurs')")
 	@PostMapping(value = "/create")
 	public boolean createUser(@RequestBody Role role) {
 
@@ -36,10 +60,10 @@ public class RoleController {
 	}
 
 	@PreAuthorize("hasAuthority('Gestion des utilisateurs')")
-	@PutMapping(value = "/update")
-	public boolean updateRole(@RequestBody Role role) {
+	@PutMapping(value = "/update/{id}")
+	public boolean updateRole(@PathVariable int id, @RequestBody Role role) {
 
-		return roleServiceImp.updateRole(role);
+		return roleServiceImp.updateRole(id, role);
 
 	}
 
@@ -51,16 +75,4 @@ public class RoleController {
 
 	}
 
-	@PreAuthorize("hasAuthority('Gestion des utilisateurs')")
-	@GetMapping(value = "/all")
-	public List<Role> getAllRoles() {
-
-		return roleServiceImp.getAllRoles();
-
-	}
-
-	@GetMapping(value = "/id/{id}")
-	public Role getRoleById(@PathVariable int id) {
-		return roleServiceImp.getRoleById(id);
-	}
 }

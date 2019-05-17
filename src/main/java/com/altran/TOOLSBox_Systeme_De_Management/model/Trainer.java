@@ -1,7 +1,6 @@
 package com.altran.TOOLSBox_Systeme_De_Management.model;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,31 +9,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.altran.TOOLSBox_Systeme_De_Management.util.Constants;
 import com.fasterxml.jackson.annotation.JsonFilter;
 
 @Entity
-@Table(name = "ROLES")
-@JsonFilter(Constants.ROLE_FILTER)
-public class Role implements Serializable {
+@Table(name = "TRAINERS")
+@JsonFilter(Constants.TRAINER_FILTER)
+public class Trainer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(unique = true)
-	private String title;
+	@Column
+	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idPrivilege")
-	private Set<Privilege> privileges;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "organism_id")
+	private Organism organism;
 
-	public Role() {
+	public Trainer() {
 		super();
 	}
 
@@ -46,20 +45,20 @@ public class Role implements Serializable {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Set<Privilege> getPrivileges() {
-		return privileges;
+	public Organism getOrganism() {
+		return organism;
 	}
 
-	public void setPrivileges(Set<Privilege> privileges) {
-		this.privileges = privileges;
+	public void setOrganism(Organism organism) {
+		this.organism = organism;
 	}
 
 }

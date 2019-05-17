@@ -9,18 +9,14 @@ import com.altran.TOOLSBox_Systeme_De_Management.model.Training;
 
 public interface TrainingService {
 
-	boolean addTraining(Training training);
-
-	boolean updateTraining(Training training);
-
-	boolean deleteTraining(int idTraining);
-
-	boolean validateTraining(String validation, int id);
-	
-	Training getTrainingById(int idTraining);
+	List<Training> getAllTrainings();
 
 	Page<Training> getTrainingsByPage(Pageable pageable);
 
-	List<Training> getAllTrainings();
+	Training getTrainingById(int idTraining);
+
+	boolean addTraining(Training training);
+
+	boolean updateTraining(int id, Training training);
 
 }

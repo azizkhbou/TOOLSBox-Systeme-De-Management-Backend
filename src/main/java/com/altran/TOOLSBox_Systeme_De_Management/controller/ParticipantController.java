@@ -1,6 +1,5 @@
 package com.altran.TOOLSBox_Systeme_De_Management.controller;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,9 +29,13 @@ public class ParticipantController {
 	}
 
 	@PostMapping(value = "/create")
-	public boolean addParticipant(@RequestBody Participant participant) {
-
-		return participantService.addParticipant(participant);
+	public MappingJacksonValue addParticipant(@RequestBody Participant participant) {
+		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+		filterProvider.addFilter(Constants.PARTICIPANT_FILTER,
+				SimpleBeanPropertyFilter.serializeAllExcept(Constants.ID, Constants.NEED));
+		MappingJacksonValue participantMapping = new MappingJacksonValue(participantService.addParticipant(participant));
+		participantMapping.setFilters(filterProvider);
+		return participantMapping;
 
 	}
 
@@ -47,19 +50,21 @@ public class ParticipantController {
 	public MappingJacksonValue getAllParticipants() {
 
 		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+		filterProvider.addFilter(Constants.NEED_FILTER,
+				SimpleBeanPropertyFilter.serializeAllExcept(Constants.ID, Constants.NEED));
 		filterProvider.addFilter(Constants.PARTICIPANT_FILTER,
-				SimpleBeanPropertyFilter.serializeAllExcept(Constants.IDPARTICIPANT,Constants.TRAINING));
-		
+				SimpleBeanPropertyFilter.serializeAllExcept(Constants.ID, Constants.NEED));
+
 		MappingJacksonValue participantsMapping = new MappingJacksonValue(participantService.getAllParticipants());
 		participantsMapping.setFilters(filterProvider);
 		return participantsMapping;
-
 	}
+
 	@GetMapping(value = "/id/{id}")
 	public MappingJacksonValue getParticipantById(@PathVariable int id) {
 		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
 		filterProvider.addFilter(Constants.PARTICIPANT_FILTER,
-				SimpleBeanPropertyFilter.serializeAllExcept(Constants.IDPARTICIPANT,Constants.TRAINING));
+				SimpleBeanPropertyFilter.serializeAllExcept(Constants.ID, Constants.NEED));
 		MappingJacksonValue participantMapping = new MappingJacksonValue(participantService.getParticipantById(id));
 		participantMapping.setFilters(filterProvider);
 		return participantMapping;

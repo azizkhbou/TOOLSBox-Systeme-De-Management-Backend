@@ -36,56 +36,14 @@ public class UserServiceImp implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public boolean addUser(User user) {
-		try {
-			System.out.println("sqdqsd");
-			System.out.println(user.getRoles().size());
-			String password = user.getPassword();
-			password = bcryptEncoder.encode(password);
-			user.setPassword(password);
-			userRepository.save(user);
-			
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
+	public Page<User> getAllUsers(int page) {
 
-	}
-
-	@Override
-	public boolean updateUser(User user) {
-		try {
-
-			userRepository.save(user);
-
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-
-	}
-
-	@Override
-	public boolean deleteUser(int idUser) {
-		try {
-			userRepository.deleteById(idUser);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-
+		return userRepository.findAll(new PageRequest(page, 6, Direction.ASC, "firstName", "lastName"));
 	}
 
 	@Override
 	public User getUserById(int idUser) {
 		return userRepository.findById(idUser).orElse(null);
-
-	}
-
-	@Override
-	public Page<User> getAllUsers(int page) {
-
-		return userRepository.findAll(new PageRequest(page, 6,Direction.ASC,"prenom","nom"));
 	}
 
 	@Override
@@ -102,7 +60,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
 		Set authorities = new HashSet<>();
 		user.getRoles().forEach(role -> {
 			role.getPrivileges().forEach(privilege -> {
-				authorities.add(new SimpleGrantedAuthority(privilege.getTitre()));
+				authorities.add(new SimpleGrantedAuthority(privilege.getTitle()));
 			});
 		});
 		return authorities;
@@ -115,4 +73,44 @@ public class UserServiceImp implements UserService, UserDetailsService {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		return user;
 	}
+
+	@Override
+	public boolean addUser(User user) {
+		try {
+			System.out.println("sqdqsd");
+			System.out.println(user.getRoles().size());
+			String password = user.getPassword();
+			password = bcryptEncoder.encode(password);
+			user.setPassword(password);
+			userRepository.save(user);
+
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+
+	}
+
+	@Override
+	public boolean updateUser(int id, User user) {
+		try {
+			user.setId(id);
+			userRepository.save(user);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+
+	}
+
+	@Override
+	public boolean deleteUser(int idUser) {
+		try {
+			userRepository.deleteById(idUser);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
 }

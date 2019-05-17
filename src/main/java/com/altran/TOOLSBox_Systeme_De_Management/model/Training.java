@@ -1,15 +1,16 @@
 package com.altran.TOOLSBox_Systeme_De_Management.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,116 +23,130 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 public class Training implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idTraining;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-	@Column(nullable = false)
-	private String object;
+	@Column
+	private String trainer;
 
-	@Column(nullable = false)
-	private String type;
+	@Column
+	private String status;
 
-	private String required;
+	@Column
+	private int dayNumber;
 
-	private String objectif;
+	@Column
+	private int dayManCost;
 
-	private int nbrOfParticipants;
+	@Column
+	private int financialCost;
 
-	private String category;
+	@Column
+	private Date schedualDate;
 
-	@OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
-	Set<Participant> participants;
+	@Column
+	private Date realDate;
 
-	private String validationActivityManager;
+	@ManyToMany
+	private Set<Activity> activity;
 
-	public Set<Participant> getParticipants() {
-		return participants;
-	}
+	@OneToMany(mappedBy = "training", fetch = FetchType.EAGER)
+	private Set<Need> need;
 
-	public void setParticipants(Set<Participant> participants) {
-		this.participants = participants;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public int getIdTraining() {
-		return idTraining;
-	}
-
-	public void setIdTraining(int idTraining) {
-		this.idTraining = idTraining;
-	}
-
-	public String getObject() {
-		return object;
-	}
-
-	public void setObject(String object) {
-		this.object = object;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getRequired() {
-		return required;
-	}
-
-	public void setRequired(String required) {
-		this.required = required;
-	}
-
-	public String getObjectif() {
-		return objectif;
-	}
-
-	public void setObjectif(String objectif) {
-		this.objectif = objectif;
-	}
-
-	public int getNbrOfParticipants() {
-		return nbrOfParticipants;
-	}
-
-	public void setNbrOfParticipants(int nbrOfParticipants) {
-		this.nbrOfParticipants = nbrOfParticipants;
-	}
-
-	public String getValidationActivityManager() {
-		return validationActivityManager;
-	}
-
-	public void setValidationActivityManager(String validationActivityManager) {
-		this.validationActivityManager = validationActivityManager;
-	}
-
-	public Training(String object, String type, String required, String objectif, int nbrOfParticipants,
-			String category, Set<Participant> participants, String validationActivityManager) {
-		super();
-		this.object = object;
-		this.type = type;
-		this.required = required;
-		this.objectif = objectif;
-		this.nbrOfParticipants = nbrOfParticipants;
-		this.category = category;
-		this.participants = participants;
-		this.validationActivityManager = validationActivityManager;
-	}
+	@OneToMany(mappedBy = "training", fetch = FetchType.EAGER)
+	private Set<Organism> organisms;
 
 	public Training() {
 		super();
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(String trainer) {
+		this.trainer = trainer;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getDayNumber() {
+		return dayNumber;
+	}
+
+	public void setDayNumber(int dayNumber) {
+		this.dayNumber = dayNumber;
+	}
+
+	public int getDayManCost() {
+		return dayManCost;
+	}
+
+	public void setDayManCost(int dayManCost) {
+		this.dayManCost = dayManCost;
+	}
+
+	public int getFinancialCost() {
+		return financialCost;
+	}
+
+	public void setFinancialCost(int financialCost) {
+		this.financialCost = financialCost;
+	}
+
+	public Date getSchedualDate() {
+		return schedualDate;
+	}
+
+	public void setSchedualDate(Date schedualDate) {
+		this.schedualDate = schedualDate;
+	}
+
+	public Date getRealDate() {
+		return realDate;
+	}
+
+	public void setRealDate(Date realDate) {
+		this.realDate = realDate;
+	}
+
+	public Set<Activity> getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Set<Activity> activity) {
+		this.activity = activity;
+	}
+
+	public Set<Need> getNeed() {
+		return need;
+	}
+
+	public void setNeed(Set<Need> need) {
+		this.need = need;
+	}
+
+	public Set<Organism> getOrganisms() {
+		return organisms;
+	}
+
+	public void setOrganisms(Set<Organism> organisms) {
+		this.organisms = organisms;
+	}
+
 }

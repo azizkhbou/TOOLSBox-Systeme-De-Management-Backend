@@ -56,7 +56,7 @@ public class AuthController {
 					userRepository.findByUsername(username)
 							.orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found"))
 							.getRoles().stream().map(role -> role.getPrivileges().stream()
-									.map(privilege -> privilege.getTitre()).collect(Collectors.toSet()))
+									.map(privilege -> privilege.getTitle()).collect(Collectors.toSet()))
 							.collect(Collectors.toList()));
 			Map<Object, Object> model = new HashMap<>();
 			model.put("username", username);

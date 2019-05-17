@@ -14,8 +14,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.altran.TOOLSBox_Systeme_De_Management.util.Constants;
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 @Entity
 @Table(name = "USERS")
+@JsonFilter(Constants.USER_FILTER)
 public class User implements Serializable {
 
 	/**
@@ -25,11 +29,11 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idUser;
+	private int id;
 
-	private String prenom;
+	private String firstName;
 
-	private String nom;
+	private String lastName;
 
 	@Column(unique = true)
 	private String email;
@@ -48,59 +52,30 @@ public class User implements Serializable {
 
 	public User() {
 		super();
-
 	}
 
-	public User(String prenom, String nom, String email, String username, String password, Set<Role> roles,
-			Activity activity) {
-		super();
-		this.prenom = prenom;
-		this.nom = nom;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-		this.activity = activity;
+	public int getId() {
+		return id;
 	}
 
-	public Activity getActivity() {
-		return activity;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setActivity(Activity activity) {
-		this.activity = activity;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public int getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -125,6 +100,22 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Activity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 
 }

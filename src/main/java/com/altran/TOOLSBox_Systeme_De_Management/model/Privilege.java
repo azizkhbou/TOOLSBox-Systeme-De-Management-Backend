@@ -19,34 +19,33 @@ public class Privilege implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idPrivilege;
+	private int id;
 
-	private String titre;
+	private String title;
 
 	public Privilege() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Privilege(String titre) {
-		super();
-		this.titre = titre;
+	public int getId() {
+		return id;
 	}
 
-	public int getIdPrivilege() {
-		return idPrivilege;
+	
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setIdPrivilege(int idPrivilege) {
-		this.idPrivilege = idPrivilege;
+	public String getTitle() {
+		return title;
 	}
 
-	public String getTitre() {
-		return titre;
+	public void setTitle(String title) {
+		this.title = title;
 	}
+	
+	
 
-	public void setTitre(String titre) {
-		this.titre = titre;
-	}
 
 }

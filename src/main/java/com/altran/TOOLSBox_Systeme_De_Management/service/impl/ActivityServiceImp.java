@@ -19,7 +19,17 @@ public class ActivityServiceImp implements ActivityService {
 		this.activityRepository = activityRepository;
 	}
 
-	
+	@Override
+	public List<Activity> getAllActivities() {
+
+		return activityRepository.findAll();
+	}
+
+	@Override
+	public Activity getActivityById(int idActivity) {
+		return activityRepository.findById(idActivity).orElse(null);
+
+	}
 
 	@Override
 	public boolean addActivity(Activity activity) {
@@ -28,13 +38,14 @@ public class ActivityServiceImp implements ActivityService {
 		} catch (Exception e) {
 			return false;
 		}
-		return true;	}
+		return true;
+	}
 
 	@Override
-	public boolean updateActivity(Activity activity) {
+	public boolean updateActivity(int id, Activity activity) {
 		try {
+			activity.setId(id);
 			activityRepository.save(activity);
-
 		} catch (Exception e) {
 			return false;
 		}
@@ -49,17 +60,6 @@ public class ActivityServiceImp implements ActivityService {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public Activity getActivityById(int idActivity) {
-		return activityRepository.findById(idActivity).orElse(null);
-		
-	}
-	@Override
-	public List<Activity> getAllActivities() {
-
-		return activityRepository.findAll();
 	}
 
 }
